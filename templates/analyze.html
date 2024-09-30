@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Data Analyzer - Analysis</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">CSV Data Analyzer - Analysis</h1>
+
+        <form action="" method="POST" class="mt-4">
+            <div class="form-group">
+                <label for="column">Select a column to analyze:</label>
+                <select name="column" id="column" class="form-control">
+                    <option value="" disabled selected>Select column</option>
+                    {% for column in columns %}
+                        <option value="{{ column }}">{{ column }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Analyze</button>
+        </form>
+
+        {% if selected_column %}
+            <h3 class="mt-4">Distribution of {{ selected_column }}</h3>
+            {% if plot_path %}
+                <img src="{{ url_for('static', filename='plot.png') }}" alt="Plot of {{ selected_column }}" class="img-fluid mt-4">
+            {% else %}
+                <p class="text-danger">Could not generate plot. Make sure the column name is correct.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
